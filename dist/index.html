@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RentKaro | Local Peer-to-Peer Rental Marketplace · Patna</title>
+  <meta name="description" content="RentKaro is Patna's trusted peer-to-peer rental marketplace. Rent DSLRs, party speakers, tools, ladders, and camping gear by the hour or day with full security deposit protection.">
+  
+  <!-- Google Fonts: Poppins (headings) & Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Favicon and App Icons from User Uploaded Logo -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-B2iZfySW.png">
+  <link rel="icon" type="image/x-icon" href="/assets/favicon-GWeyEfZS.ico">
+  <link rel="apple-touch-icon" sizes="128x128" href="/assets/apple-touch-icon-BEMTQykW.png">
+  
+  <script type="module" crossorigin src="/assets/index-BqJR5AdL.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-c6g66Vp_.css">
+</head>
+<body data-theme="light">
+  <!-- Toast Notification Hub -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="main-nav">
+    <div class="nav-container">
+      <div class="nav-left">
+        <a href="#browse" class="brand-logo" id="brand-logo-btn">
+          <img src="/assets/logo-symbol-CD2KiYxE.png" alt="RentKaro" class="brand-logo-img">
+          <div class="brand-text">
+            <span class="brand-name"><span class="brand-rent">Rent</span><span class="brand-karo">Karo</span></span>
+            <span class="brand-badge">Patna Pilot</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="nav-tabs" id="nav-tabs" aria-label="Main Navigation">
+        <button class="nav-tab active" data-view="browse" id="nav-tab-browse">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <span>Rent Gear</span>
+        </button>
+        <button class="nav-tab" data-view="list" id="nav-tab-list">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>List an Item</span>
+        </button>
+        <button class="nav-tab" data-view="owner" id="nav-tab-owner">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span>Owner Hub</span>
+          <span class="count-badge" id="owner-requests-badge">1</span>
+        </button>
+        <button class="nav-tab" data-view="bookings" id="nav-tab-bookings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          <span>My Bookings</span>
+          <span class="count-badge count-badge-amber" id="renter-bookings-badge">2</span>
+        </button>
+      </nav>
+
+      <div class="nav-right">
+        <!-- City Selector Pill -->
+        <div class="city-pill" title="Currently launched in Patna">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <span id="current-city-label">Patna</span>
+          <span class="city-dot"></span>
+        </div>
+
+        <!-- Dark / Light Theme Toggle -->
+        <button class="theme-toggle-btn" id="theme-toggle-btn" title="Toggle Light / Dark Mode" aria-label="Toggle Theme">
+          <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+
+        <!-- Fast Role Switcher for Seamless Testing -->
+        <div class="role-switcher" id="role-switcher">
+          <span class="role-label">Active Role:</span>
+          <button class="role-btn active" id="role-renter-btn" data-role="renter">Renter</button>
+          <button class="role-btn" id="role-owner-btn" data-role="owner">Owner</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Application Body -->
+  <main class="app-main">
+    
+    <!-- ==============================================
+         VIEW 1: BROWSE & RENT (Landing + Marketplace)
+         ============================================== -->
+    <section class="view-section active" id="view-browse">
+      
+      <!-- F1: Two-Option Landing Screen Hero -->
+      <div class="hero-section">
+        <div class="hero-inner">
+          <div class="hero-tag">
+            <span class="hero-tag-pulse"></span>
+            Prototype Stage · Live in Patna
+          </div>
+          <h1 class="hero-title">Rent what you need.<br><span class="highlight-teal">Earn from what you own.</span></h1>
+          <p class="hero-subtitle">
+            Patna's local peer-to-peer rental marketplace. Borrow DSLRs, party speakers, power tools, ladders, and camping gear from trusted neighbours by the hour or day.
+          </p>
+
+          <!-- Core PRD Requirement F1: Two-Option Decision Cards -->
+          <div class="landing-choice-grid">
+            <div class="choice-card choice-card-rent" id="btn-choice-rent">
+              <div class="choice-icon-wrap choice-icon-teal">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </div>
+              <div class="choice-content">
+                <div class="choice-eyebrow">Looking for gear?</div>
+                <h2 class="choice-title">Rent an Item</h2>
+                <p class="choice-desc">Find items within 5 km of your pincode in under 2 minutes. Transparent hourly rates & refundable deposit.</p>
+                <div class="choice-action">
+                  <span>Browse Gear Nearby</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="choice-card choice-card-list" id="btn-choice-list">
+              <div class="choice-icon-wrap choice-icon-amber">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+              </div>
+              <div class="choice-content">
+                <div class="choice-eyebrow">Have idle items?</div>
+                <h2 class="choice-title">List an Item</h2>
+                <p class="choice-desc">Turn your idle cameras, speakers, or ladders into daily cash. List in under 3 minutes with full deposit protection.</p>
+                <div class="choice-action">
+                  <span>Start Listing (3 mins)</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trust Badges Bar (Section 8: Trust and Safety) -->
+          <div class="trust-strip">
+            <div class="trust-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              <span><strong>100% Refundable Deposit</strong> held safely until return</span>
+            </div>
+            <div class="trust-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              <span><strong>Fair Day-Rate Cap</strong> per 24 hours</span>
+            </div>
+            <div class="trust-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span><strong>Govt ID Verification</strong> mandatory for renters</span>
+            </div>
+            <div class="trust-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <span><strong>Owner Contact Masked</strong> until acceptance</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Marketplace Search & Filter Bar (F3, F4) -->
+      <div class="marketplace-container" id="marketplace-section">
+        <div class="search-panel">
+          <div class="search-inputs-row">
+            <!-- Keyword Search -->
+            <div class="search-field keyword-field">
+              <svg class="field-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="search-keyword" placeholder="Search DSLR, speaker, ladder, drill, tent..." aria-label="Search items">
+              <button class="clear-search-btn" id="btn-clear-search" title="Clear search" style="display: none;">&times;</button>
+            </div>
+
+            <!-- 6-Digit Pincode Input (F3) -->
+            <div class="search-field pincode-field">
+              <svg class="field-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <input type="text" id="search-pincode" maxlength="6" placeholder="Pincode (e.g. 800001)" value="800001" aria-label="6-digit Pincode">
+              <span class="pincode-badge" id="pincode-area-badge">Boring Rd</span>
+            </div>
+
+            <!-- Sort By (F4) -->
+            <div class="search-field sort-field">
+              <label for="sort-select" class="sort-label">Sort by:</label>
+              <select id="sort-select" aria-label="Sort options">
+                <option value="nearest">Nearest to Pincode</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="rating">Highest Rated</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Quick Patna Pincode Chips -->
+          <div class="quick-pincodes-row">
+            <span class="quick-chip-label">Quick Patna Areas:</span>
+            <button class="pincode-chip active" data-pincode="800001" data-area="Boring Road">800001 Boring Rd</button>
+            <button class="pincode-chip" data-pincode="800020" data-area="Kankarbagh">800020 Kankarbagh</button>
+            <button class="pincode-chip" data-pincode="800013" data-area="Patliputra">800013 Patliputra</button>
+            <button class="pincode-chip" data-pincode="800014" data-area="Bailey Road">800014 Bailey Rd</button>
+            <button class="pincode-chip" data-pincode="800016" data-area="Rajendra Nagar">800016 Rajendra Nagar</button>
+            <button class="pincode-chip" data-pincode="800002" data-area="Anisabad">800002 Anisabad</button>
+          </div>
+
+          <!-- Category Pills (F3) -->
+          <div class="category-pills-row" id="category-pills">
+            <button class="cat-pill active" data-category="all">All Categories</button>
+            <button class="cat-pill" data-category="sound">🔊 Speakers & Sound</button>
+            <button class="cat-pill" data-category="cameras">📷 Cameras & DSLRs</button>
+            <button class="cat-pill" data-category="tools">🔨 Ladders & Tools</button>
+            <button class="cat-pill" data-category="camping">⛺ Camping & Travel</button>
+            <button class="cat-pill" data-category="electronics">📽️ Projectors & Electronics</button>
+          </div>
+        </div>
+
+        <!-- Items Results Header -->
+        <div class="results-header">
+          <div class="results-meta">
+            <span class="results-count" id="results-count">Showing 8 items</span>
+            <span class="results-location" id="results-location-info">in Patna (sorted by nearest to 800001)</span>
+          </div>
+          <div class="results-actions">
+            <button class="btn-secondary btn-sm" id="btn-reset-filters">Reset Filters</button>
+          </div>
+        </div>
+
+        <!-- Marketplace Cards Grid -->
+        <div class="items-grid" id="items-grid">
+          <!-- Dynamically populated via JS -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="items-empty-state" style="display: none;">
+          <div class="empty-icon">🔍</div>
+          <h3>No matching rental items found</h3>
+          <p>Try searching with another keyword or enter a nearby Patna pincode (like 800001, 800020, 800013).</p>
+          <button class="btn-primary" id="btn-empty-reset">Show All Items</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         VIEW 2: LIST AN ITEM STUDIO (F2, F8)
+         ============================================== -->
+    <section class="view-section" id="view-list">
+      <div class="form-container">
+        <div class="form-header">
+          <div class="form-tag">Owner Listing Studio</div>
+          <h2 class="form-title">List an item in under 3 minutes</h2>
+          <p class="form-desc">Rent out your idle cameras, speakers, tools, and gear to verified Patna neighbours. Set your hourly price, security deposit, and rules.</p>
+        </div>
+
+        <div class="form-layout">
+          <!-- Main Listing Form -->
+          <form class="listing-form" id="listing-form" novalidate>
+            
+            <!-- SECTION 1: Photos (Up to 4 photos) -->
+            <div class="form-card">
+              <div class="form-card-header">
+                <span class="step-num">1</span>
+                <div>
+                  <h3 class="card-title">Upload Item Photos (up to 4)</h3>
+                  <p class="card-desc">Clear photos build renter trust and reduce disputes at handover.</p>
+                </div>
+              </div>
+
+              <div class="photo-uploader-box">
+                <div class="drop-zone" id="photo-drop-zone">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                  <div class="drop-text">
+                    <span class="drop-main">Click to browse or drop photos here</span>
+                    <span class="drop-sub">PNG, JPG, WebP supported · Up to 4 photos</span>
+                  </div>
+                  <input type="file" id="listing-file-input" accept="image/*" multiple style="display: none;">
+                </div>
+
+                <!-- Preset Quick Photo Selector for Instant Demo Listing -->
+                <div class="preset-photos-bar">
+                  <span class="preset-label">Or choose sample gear photo:</span>
+                  <div class="preset-pills">
+                    <button type="button" class="preset-photo-btn" data-url="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80" data-label="DSLR Camera">📷 DSLR</button>
+                    <button type="button" class="preset-photo-btn" data-url="https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=800&q=80" data-label="Party Speaker">🔊 Speaker</button>
+                    <button type="button" class="preset-photo-btn" data-url="https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=800&q=80" data-label="Power Drill">🔨 Drill</button>
+                    <button type="button" class="preset-photo-btn" data-url="https://images.unsplash.com/photo-1510312305653-8ed496efae75?auto=format&fit=crop&w=800&q=80" data-label="Camping Tent">⛺ Tent</button>
+                  </div>
+                </div>
+
+                <!-- Selected Photo Preview Gallery -->
+                <div class="photo-preview-grid" id="photo-preview-grid">
+                  <!-- Injected via JS -->
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 2: Basic Info -->
+            <div class="form-card">
+              <div class="form-card-header">
+                <span class="step-num">2</span>
+                <div>
+                  <h3 class="card-title">Item Details</h3>
+                  <p class="card-desc">Tell neighbours what you are renting out.</p>
+                </div>
+              </div>
+
+              <div class="input-grid">
+                <div class="form-group span-2">
+                  <label for="list-name">Item Name <span class="req">*</span></label>
+                  <input type="text" id="list-name" placeholder="e.g. Sony Alpha A7 III with 28-70mm Kit" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="list-category">Category <span class="req">*</span></label>
+                  <select id="list-category" required>
+                    <option value="">Select category...</option>
+                    <option value="cameras">📷 Cameras & DSLRs</option>
+                    <option value="sound">🔊 Speakers & Party Sound</option>
+                    <option value="tools">🔨 Ladders & Power Tools</option>
+                    <option value="camping">⛺ Camping & Outdoor Gear</option>
+                    <option value="electronics">📽️ Projectors & Electronics</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="list-condition">Item Condition <span class="req">*</span></label>
+                  <select id="list-condition" required>
+                    <option value="Like New">Like New (Mint condition)</option>
+                    <option value="Excellent" selected>Excellent (Minor cosmetics)</option>
+                    <option value="Good">Good (Fully functional)</option>
+                  </select>
+                </div>
+
+                <div class="form-group span-2">
+                  <label for="list-description">Description & Box Contents <span class="req">*</span></label>
+                  <textarea id="list-description" rows="3" placeholder="Describe the item, features, accessories included (cables, extra batteries, bag), and tips for the renter." required></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 3: Pricing & Deposit (F2, Section 7) -->
+            <div class="form-card">
+              <div class="form-card-header">
+                <span class="step-num">3</span>
+                <div>
+                  <h3 class="card-title">Pricing & Security Deposit</h3>
+                  <p class="card-desc">Fair pricing ensures quick bookings while deposit covers damage risks.</p>
+                </div>
+              </div>
+
+              <div class="input-grid">
+                <div class="form-group">
+                  <label for="list-hourly">Price per Hour (₹) <span class="req">*</span></label>
+                  <div class="input-with-prefix">
+                    <span class="prefix">₹</span>
+                    <input type="number" id="list-hourly" min="10" max="10000" placeholder="150" required>
+                  </div>
+                  <small class="field-hint">For short rentals (e.g. 2–8 hrs)</small>
+                </div>
+
+                <div class="form-group">
+                  <label for="list-day">Price per Day (₹ Capped Rate) <span class="req">*</span></label>
+                  <div class="input-with-prefix">
+                    <span class="prefix">₹</span>
+                    <input type="number" id="list-day" min="50" max="50000" placeholder="1000" required>
+                  </div>
+                  <small class="field-hint">Max rent per 24 hours (Caps hourly rate)</small>
+                </div>
+
+                <div class="form-group">
+                  <label for="list-deposit">Security Deposit (₹ Refundable) <span class="req">*</span></label>
+                  <div class="input-with-prefix">
+                    <span class="prefix">₹</span>
+                    <input type="number" id="list-deposit" min="0" max="100000" placeholder="4000" required>
+                  </div>
+                  <small class="field-hint">Refunded to renter after safe return</small>
+                </div>
+
+                <div class="form-group">
+                  <label for="list-min-hours">Minimum Hours <span class="req">*</span></label>
+                  <div class="input-with-prefix">
+                    <span class="prefix">⏱️</span>
+                    <input type="number" id="list-min-hours" min="1" max="24" value="2" required>
+                  </div>
+                  <small class="field-hint">Smallest booking slot allowed</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 4: Patna Location & Pickup Window -->
+            <div class="form-card">
+              <div class="form-card-header">
+                <span class="step-num">4</span>
+                <div>
+                  <h3 class="card-title">Location & Availability</h3>
+                  <p class="card-desc">Specify your neighbourhood in Patna and available pickup times.</p>
+                </div>
+              </div>
+
+              <div class="input-grid">
+                <div class="form-group">
+                  <label for="list-pincode">6-digit Patna Pincode <span class="req">*</span></label>
+                  <input type="text" id="list-pincode" maxlength="6" placeholder="800001" value="800001" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="list-area">Area / Colony Name <span class="req">*</span></label>
+                  <input type="text" id="list-area" placeholder="e.g. Boring Road, Near Alankar Jewellers" required>
+                </div>
+
+                <div class="form-group span-2">
+                  <label for="list-window">Available Time Window <span class="req">*</span></label>
+                  <input type="text" id="list-window" placeholder="e.g. 08:00 AM – 09:00 PM (Mon to Sun)" value="08:00 AM – 09:00 PM" required>
+                </div>
+
+                <div class="form-group span-2">
+                  <label for="list-instructions">Pickup Instructions</label>
+                  <textarea id="list-instructions" rows="2" placeholder="e.g. Handover at Gate 2. Please bring original physical Aadhaar or Driving License for inspection."></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- SECTION 5: Trust, Rules & Owner Contact -->
+            <div class="form-card">
+              <div class="form-card-header">
+                <span class="step-num">5</span>
+                <div>
+                  <h3 class="card-title">Item Rules & Contact</h3>
+                  <p class="card-desc">Phone is kept private until you accept the renter's request.</p>
+                </div>
+              </div>
+
+              <div class="input-grid">
+                <div class="form-group span-2">
+                  <label for="list-rules">Item Usage Rules</label>
+                  <textarea id="list-rules" rows="2" placeholder="e.g. No water exposure; return with full battery; for domestic and private event use only.">Handle with care. Return in original protective case. Not to be sub-rented.</textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="list-owner-name">Your Full Name <span class="req">*</span></label>
+                  <input type="text" id="list-owner-name" placeholder="e.g. Rahul Sharma" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="list-owner-phone">Your Phone Number <span class="req">*</span></label>
+                  <input type="tel" id="list-owner-phone" placeholder="e.g. 9876543210" maxlength="10" required>
+                  <small class="field-hint">🔒 Masked from public view; revealed only after acceptance.</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Form Submit Action -->
+            <div class="form-actions">
+              <button type="button" class="btn-secondary" id="btn-cancel-listing">Cancel</button>
+              <button type="submit" class="btn-primary btn-lg" id="btn-publish-listing">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                <span>Publish Item Immediately</span>
+              </button>
+            </div>
+          </form>
+
+          <!-- Live Preview Sticky Panel -->
+          <aside class="preview-panel">
+            <div class="preview-card-sticky">
+              <div class="preview-badge">Live Listing Preview</div>
+              <div class="item-card preview-item-card" id="listing-live-preview">
+                <div class="item-card-image-wrap">
+                  <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80" alt="Preview" id="preview-img" class="item-card-img">
+                  <span class="item-cond-badge" id="preview-condition">Excellent</span>
+                </div>
+                <div class="item-card-body">
+                  <div class="item-cat-tag" id="preview-cat">Cameras & DSLRs</div>
+                  <h4 class="item-card-title" id="preview-title">Your Item Title Here</h4>
+                  <div class="item-location-line">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    <span id="preview-location">Boring Road · 800001</span>
+                  </div>
+                  <div class="item-price-row">
+                    <div class="item-price-col">
+                      <span class="price-val" id="preview-hourly">₹150</span>
+                      <span class="price-unit">/ hour</span>
+                    </div>
+                    <div class="item-day-cap-col">
+                      <span class="day-cap-label">Day Cap:</span>
+                      <span class="day-cap-val" id="preview-day">₹1,000</span>
+                    </div>
+                  </div>
+                  <div class="item-deposit-line">
+                    <span class="deposit-label">Refundable Deposit:</span>
+                    <span class="deposit-val" id="preview-deposit">₹4,000</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="preview-tips">
+                <h4>💡 Tips for quick bookings:</h4>
+                <ul>
+                  <li>Provide at least 2 photos from different angles.</li>
+                  <li>Set hourly price reasonable for 2–4 hour projects.</li>
+                  <li>Patna renters love flexible evening return times.</li>
+                </ul>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         VIEW 3: OWNER DASHBOARD & REQUESTS (F6, F8)
+         ============================================== -->
+    <section class="view-section" id="view-owner">
+      <div class="dashboard-container">
+        <div class="dashboard-header">
+          <div>
+            <div class="dash-tag">Owner Management Hub</div>
+            <h2 class="dash-title">My Listings & Incoming Rental Requests</h2>
+            <p class="dash-desc">Review requests from neighbours, accept bookings to reveal contact, or pause listings anytime.</p>
+          </div>
+          <div class="dash-actions">
+            <button class="btn-primary" id="btn-owner-create-new">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>+ List Another Item</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Metrics Overview -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-icon metric-icon-teal">📦</div>
+            <div class="metric-data">
+              <span class="metric-num" id="metric-total-listings">3</span>
+              <span class="metric-label">Published Listings</span>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon metric-icon-amber">⏳</div>
+            <div class="metric-data">
+              <span class="metric-num" id="metric-pending-requests">1</span>
+              <span class="metric-label">Pending Requests</span>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon metric-icon-green">✅</div>
+            <div class="metric-data">
+              <span class="metric-num" id="metric-accepted-bookings">4</span>
+              <span class="metric-label">Accepted Bookings</span>
+            </div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon metric-icon-teal">💰</div>
+            <div class="metric-data">
+              <span class="metric-num" id="metric-estimated-earnings">₹3,450</span>
+              <span class="metric-label">Estimated Rental Earnings</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Owner Tabs: Incoming Requests vs My Published Listings -->
+        <div class="subtabs-bar">
+          <button class="subtab-btn active" data-subtab="requests" id="subtab-requests-btn">
+            <span>Incoming Rental Requests</span>
+            <span class="subtab-count" id="subtab-requests-count">1</span>
+          </button>
+          <button class="subtab-btn" data-subtab="listings" id="subtab-listings-btn">
+            <span>My Active Listings</span>
+            <span class="subtab-count" id="subtab-listings-count">3</span>
+          </button>
+        </div>
+
+        <!-- TAB 1 CONTENT: Incoming Rental Requests (F6) -->
+        <div class="subtab-content active" id="subtab-content-requests">
+          <div class="requests-list" id="owner-requests-list">
+            <!-- Dynamic request cards populated via JS -->
+          </div>
+        </div>
+
+        <!-- TAB 2 CONTENT: My Published Listings (F8) -->
+        <div class="subtab-content" id="subtab-content-listings">
+          <div class="owner-listings-grid" id="owner-listings-grid">
+            <!-- Dynamic owner items with Pause / Resume populated via JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================
+         VIEW 4: RENTER BOOKING TRACKER (F7, Section 10)
+         ============================================== -->
+    <section class="view-section" id="view-bookings">
+      <div class="dashboard-container">
+        <div class="dashboard-header">
+          <div>
+            <div class="dash-tag">Renter Portal</div>
+            <h2 class="dash-title">My Rental Bookings</h2>
+            <p class="dash-desc">Track status in real time. Owner contact and exact pickup address are revealed upon acceptance.</p>
+          </div>
+          <div class="dash-actions">
+            <button class="btn-secondary" id="btn-back-to-browse">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <span>Explore More Items</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Status Filter Filter Tabs -->
+        <div class="booking-filter-bar">
+          <button class="filter-chip active" data-status-filter="all">All Bookings (<span id="count-all-bookings">2</span>)</button>
+          <button class="filter-chip" data-status-filter="Pending">Pending (<span id="count-pending-bookings">1</span>)</button>
+          <button class="filter-chip" data-status-filter="Accepted">Accepted (<span id="count-accepted-bookings">1</span>)</button>
+          <button class="filter-chip" data-status-filter="Declined">Declined (<span id="count-declined-bookings">0</span>)</button>
+        </div>
+
+        <!-- Bookings List (F7) -->
+        <div class="renter-bookings-list" id="renter-bookings-list">
+          <!-- Dynamically populated via JS -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==============================================
+       MODAL: ITEM DETAILS & INTERACTIVE BOOKING (F5)
+       ============================================== -->
+  <div class="modal-backdrop" id="item-modal-backdrop" style="display: none;" aria-hidden="true">
+    <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="modal-item-title">
+      
+      <button class="modal-close-btn" id="btn-close-modal" aria-label="Close dialog">&times;</button>
+      
+      <div class="modal-body-split">
+        <!-- LEFT: Item Info, Gallery, Rules, Location -->
+        <div class="modal-left-pane">
+          <!-- Gallery -->
+          <div class="modal-gallery">
+            <div class="main-photo-frame">
+              <img src="" alt="Main Item Photo" id="modal-main-img">
+              <span class="modal-cond-badge" id="modal-condition-badge">Excellent</span>
+            </div>
+            <div class="thumb-strip" id="modal-thumb-strip">
+              <!-- Thumbnails injected via JS -->
+            </div>
+          </div>
+
+          <!-- Title & Badges -->
+          <div class="modal-item-header">
+            <div class="modal-meta-row">
+              <span class="cat-badge" id="modal-category-badge">Category</span>
+              <span class="loc-badge" id="modal-location-badge">Boring Road · 800001</span>
+              <span class="rating-badge" id="modal-rating-badge">★ 4.9 (12 rentals)</span>
+            </div>
+            <h2 class="modal-title" id="modal-item-title">Item Title</h2>
+            <p class="modal-description" id="modal-item-desc">Item description goes here...</p>
+          </div>
+
+          <!-- Pricing Matrix Specs -->
+          <div class="modal-specs-box">
+            <div class="spec-cell">
+              <span class="spec-label">Hourly Rate</span>
+              <span class="spec-value highlight-teal" id="modal-hourly-rate">₹150/hr</span>
+            </div>
+            <div class="spec-cell">
+              <span class="spec-label">Day Capped Rate</span>
+              <span class="spec-value" id="modal-day-rate">₹1,000/24h</span>
+            </div>
+            <div class="spec-cell">
+              <span class="spec-label">Refundable Deposit</span>
+              <span class="spec-value highlight-amber" id="modal-deposit-amount">₹4,000</span>
+            </div>
+            <div class="spec-cell">
+              <span class="spec-label">Minimum Rental</span>
+              <span class="spec-value" id="modal-min-hours">2 Hours</span>
+            </div>
+          </div>
+
+          <!-- Pickup & Rules -->
+          <div class="modal-info-block">
+            <h4 class="block-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <span>Availability & Pickup Window</span>
+            </h4>
+            <p id="modal-time-window">08:00 AM – 09:00 PM</p>
+            <p class="pickup-notes" id="modal-pickup-notes">Handover at Gate 2. Bring physical ID.</p>
+          </div>
+
+          <div class="modal-info-block">
+            <h4 class="block-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              <span>Owner's Usage Rules</span>
+            </h4>
+            <div class="rules-box" id="modal-rules-box">
+              <!-- Injected via JS -->
+            </div>
+          </div>
+
+          <!-- Owner Privacy Note -->
+          <div class="owner-privacy-card">
+            <div class="owner-avatar-icon">👤</div>
+            <div>
+              <div class="owner-name-line">
+                <strong id="modal-owner-name">Rahul Sharma</strong> · Verified Lister
+              </div>
+              <div class="owner-phone-disclaimer">
+                🔒 Phone number & exact address are revealed instantly once Rahul accepts your booking.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Interactive Live Booking Engine (F5) -->
+        <div class="modal-right-pane">
+          <div class="booking-form-wrap">
+            <div class="booking-header">
+              <h3>Reserve this Gear</h3>
+              <p>Instant price calculation with day-cap discount.</p>
+            </div>
+
+            <form id="booking-request-form" novalidate>
+              <!-- Hidden Item ID -->
+              <input type="hidden" id="book-item-id">
+
+              <!-- Date & Time Row -->
+              <div class="input-grid">
+                <div class="form-group">
+                  <label for="book-date">Rental Date <span class="req">*</span></label>
+                  <input type="date" id="book-date" required>
+                </div>
+                <div class="form-group">
+                  <label for="book-time">Start Time <span class="req">*</span></label>
+                  <select id="book-time" required>
+                    <option value="08:00">08:00 AM</option>
+                    <option value="09:00">09:00 AM</option>
+                    <option value="10:00" selected>10:00 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="13:00">01:00 PM</option>
+                    <option value="14:00">02:00 PM</option>
+                    <option value="15:00">03:00 PM</option>
+                    <option value="16:00">04:00 PM</option>
+                    <option value="17:00">05:00 PM</option>
+                    <option value="18:00">06:00 PM</option>
+                    <option value="19:00">07:00 PM</option>
+                    <option value="20:00">08:00 PM</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Rental Hours Stepper -->
+              <div class="form-group">
+                <div class="hours-label-row">
+                  <label for="book-hours">Duration in Hours <span class="req">*</span></label>
+                  <span class="hours-display-badge" id="book-hours-badge">4 Hours</span>
+                </div>
+                <div class="hours-stepper">
+                  <button type="button" class="stepper-btn" id="btn-hours-minus">-</button>
+                  <input type="number" id="book-hours" min="1" max="168" value="4" required>
+                  <button type="button" class="stepper-btn" id="btn-hours-plus">+</button>
+                </div>
+                <div class="quick-hours-presets">
+                  <button type="button" class="hour-chip" data-hrs="3">3 hrs</button>
+                  <button type="button" class="hour-chip active" data-hrs="6">6 hrs</button>
+                  <button type="button" class="hour-chip" data-hrs="12">12 hrs</button>
+                  <button type="button" class="hour-chip" data-hrs="24">1 Day (24 hrs)</button>
+                  <button type="button" class="hour-chip" data-hrs="48">2 Days</button>
+                </div>
+              </div>
+
+              <!-- Delivery Choice -->
+              <div class="form-group">
+                <label>Fulfillment Method</label>
+                <div class="fulfillment-options">
+                  <label class="fulfillment-card active" id="label-pickup">
+                    <input type="radio" name="fulfillment" value="pickup" checked>
+                    <div class="f-info">
+                      <strong>Self Pickup (Free)</strong>
+                      <span>Collect at owner's spot in Patna</span>
+                    </div>
+                  </label>
+                  <label class="fulfillment-card" id="label-delivery">
+                    <input type="radio" name="fulfillment" value="delivery">
+                    <div class="f-info">
+                      <strong>Doorstep Drop (+₹99)</strong>
+                      <span>Direct courier delivery</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- LIVE PRICING BREAKDOWN (PRD Section 7) -->
+              <div class="live-pricing-card">
+                <div class="pricing-card-header">
+                  <span>Price Calculation (Live)</span>
+                  <span class="cap-indicator" id="pricing-cap-tag">Hourly Rate</span>
+                </div>
+                <div class="price-breakdown-table">
+                  <div class="price-row">
+                    <span id="price-rent-calc-label">Rent (4 hrs × ₹150)</span>
+                    <strong id="price-rent-subtotal">₹600</strong>
+                  </div>
+                  <div class="price-row" id="row-day-cap-savings" style="display: none;">
+                    <span class="savings-text">🎉 24-hr Cap Applied:</span>
+                    <strong class="savings-text" id="price-savings-val">-₹300</strong>
+                  </div>
+                  <div class="price-row" id="row-delivery-fee" style="display: none;">
+                    <span>Doorstep Delivery in Patna</span>
+                    <strong>₹99</strong>
+                  </div>
+                  <div class="price-row deposit-row">
+                    <span>
+                      Refundable Security Deposit
+                      <small class="d-block text-muted">100% returned on safe handover</small>
+                    </span>
+                    <strong id="price-deposit-val">₹4,000</strong>
+                  </div>
+                  <div class="price-divider"></div>
+                  <div class="price-row total-row">
+                    <span>Total Handover Amount</span>
+                    <span class="final-total" id="price-grand-total">₹4,600</span>
+                  </div>
+                </div>
+                <div class="deposit-guarantee-note">
+                  🛡️ You only pay at physical handover. Zero upfront debit card charges for this prototype.
+                </div>
+              </div>
+
+              <!-- Renter Identification & Details (PRD Section 4 & 8) -->
+              <div class="renter-info-box">
+                <h4 class="section-subheading">Renter Verification & Contact</h4>
+                
+                <div class="input-grid">
+                  <div class="form-group">
+                    <label for="renter-name">Your Full Name <span class="req">*</span></label>
+                    <input type="text" id="renter-name" placeholder="e.g. Amit Kumar" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="renter-phone">Phone Number <span class="req">*</span></label>
+                    <input type="tel" id="renter-phone" maxlength="10" placeholder="10-digit mobile" required>
+                  </div>
+                  <div class="form-group span-2">
+                    <label for="renter-email">Email Address <span class="req">*</span></label>
+                    <input type="email" id="renter-email" placeholder="amit@gmail.com" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="renter-pincode">Your Pincode <span class="req">*</span></label>
+                    <input type="text" id="renter-pincode" maxlength="6" value="800001" placeholder="800001" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="renter-address">Street / Area Address <span class="req">*</span></label>
+                    <input type="text" id="renter-address" placeholder="Flat / House / Landmark" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="renter-id-type">Govt ID Type <span class="req">*</span></label>
+                    <select id="renter-id-type" required>
+                      <option value="Aadhaar Card">Aadhaar Card</option>
+                      <option value="Driving License">Driving License</option>
+                      <option value="Voter ID">Voter ID</option>
+                      <option value="Passport">Passport</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="renter-id-number">ID Number <span class="req">*</span></label>
+                    <input type="text" id="renter-id-number" placeholder="e.g. 5421 9832 1042" required>
+                  </div>
+                  <div class="form-group span-2">
+                    <label for="renter-purpose">Purpose of Rental <span class="req">*</span></label>
+                    <input type="text" id="renter-purpose" placeholder="e.g. Family wedding shoot / Rooftop party / DIY bookshelf" required>
+                  </div>
+                  <div class="form-group span-2">
+                    <label for="renter-notes">Notes or Message to Owner</label>
+                    <textarea id="renter-notes" rows="2" placeholder="Any specific requirements, pickup timing requests, or questions."></textarea>
+                  </div>
+                </div>
+
+                <!-- Terms & Rules Agreement (PRD Section 8) -->
+                <div class="agreement-checkbox-box">
+                  <label class="custom-checkbox">
+                    <input type="checkbox" id="book-agree-rules" required>
+                    <span class="checkmark"></span>
+                    <span class="agreement-text">
+                      I agree to the owner's usage rules, acknowledge the refundable security deposit policy, and agree to present my original ID at pickup.
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Double Booking Alert if Conflict (F9) -->
+              <div class="conflict-alert" id="booking-conflict-alert" style="display: none;">
+                ⚠️ <strong>Slot Conflict:</strong> This item already has a confirmed rental for the selected timeframe. Please pick another date or time.
+              </div>
+
+              <!-- Submit Request Action -->
+              <button type="submit" class="btn-primary btn-block btn-lg" id="btn-submit-booking">
+                <span>Send Rental Request to Owner</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="footer-logo-wrap">
+          <img src="/assets/logo-transparent-C_x2wZtZ.png" alt="RentKaro - Local Peer-to-Peer Rentals" class="footer-logo-img">
+        </div>
+        <p class="footer-desc">
+          Patna's local peer-to-peer rental marketplace. Building trust, cutting wasteful purchases, and enabling neighbourhood micro-earnings across Patna.
+        </p>
+      </div>
+
+      <div class="footer-links-group">
+        <span class="footer-col-title">Prototype Flows</span>
+        <button class="footer-link" data-view="browse">Browse Gear Nearby</button>
+        <button class="footer-link" data-view="list">List an Item (Owner)</button>
+        <button class="footer-link" data-view="owner">Owner Request Dashboard</button>
+        <button class="footer-link" data-view="bookings">Renter Booking Tracker</button>
+      </div>
+
+      <div class="footer-links-group">
+        <span class="footer-col-title">Trust & Support</span>
+        <span class="footer-meta-item">🛡️ Refundable Security Deposit</span>
+        <span class="footer-meta-item">🆔 Government ID Verification</span>
+        <span class="footer-meta-item">📍 Patna Pilot Launch (800001 - 800020)</span>
+        <button class="footer-link text-amber" id="btn-reset-demo-data">↺ Reset All Demo Data</button>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 RentKaro Prototype v1.0 · Designed for Laptop & Desktop · Clean & Minimal UI</p>
+    </div>
+  </footer>
+
+  <!-- Main JavaScript Logic -->
+</body>
+</html>
